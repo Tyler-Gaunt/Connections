@@ -1,5 +1,5 @@
 ### tyler gaunt's connections ###
-### v.1.0 ###
+### v.1.1 ###
 
 # import standard libraries
 # these are libraries built into python giving my script extra functionality
