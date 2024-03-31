@@ -1,5 +1,5 @@
 ### tyler gaunt's connections ###
-### v.1.1 ###
+### v.1.2 ###
 
 # import standard libraries
 # these are libraries built into python giving my script extra functionality
@@ -109,31 +109,36 @@ def ConvertListsToSetsAndCheckGuesses(connections,guess):
     
 # def ReDrawTheGridAfterCorrectGuess(connections, guess):    
 
-# mainline
-WelcomeScreen()
-connections = selected_categories
-grid = GenerateEmpty4x4Grid()
-all_words_flat = FlattenThenShuffleCategoryDictionariesIntoList(connections)
-grid = RebuildGridUsingFlattenedRandomisedList(all_words_flat)
-PrintFormatedPrettyGrid(grid)
+def PlayGame():
+    WelcomeScreen()
+    connections = selected_categories
+    grid = GenerateEmpty4x4Grid()
+    all_words_flat = FlattenThenShuffleCategoryDictionariesIntoList(connections)
+    grid = RebuildGridUsingFlattenedRandomisedList(all_words_flat)
+    PrintFormatedPrettyGrid(grid)
 
-# main game loop
-guessed_categories = []
-lives = 4
-won = False
-while lives > 0 and won is False:
-    guess = GetPlayerGuess()
-    check_guess = ConvertListsToSetsAndCheckGuesses(connections, guess)
-    if check_guess is False:
-        lives = lives - 1
-        print_letter_by_letter(f"Incorrect Guess, you have {lives} remaining.. ")
-    else:
-        guessed_categories.append(check_guess)
-        print_letter_by_letter(f"Correct Guess! ")
+    # main game loop
+    guessed_categories = []
+    lives = 4
+    won = False
+    while lives > 0 and won is False:
+        guess = GetPlayerGuess()
+        check_guess = ConvertListsToSetsAndCheckGuesses(connections, guess)
+        if check_guess is False:
+            lives = lives - 1
+            print_letter_by_letter(f"Incorrect Guess, you have {lives} remaining.. ")
+        else:
+            guessed_categories.append(check_guess)
+            print_letter_by_letter(f"Correct Guess! ")
 
-        print(f"You guessed the following category: {check_guess["Category_name"]}")
-        
+            print(f"You guessed the following category: {check_guess["Category_name"]}")
+            
+    if lives == 0:
+        print_letter_by_letter("Game Over")
 
-
-if lives == 0:
-    print_letter_by_letter("Game Over")
+play_again = True
+while play_again == True:
+    PlayGame()
+    play_again = input("Play again? Y/N")
+    if play_again != "Y":
+        play_again = False
