@@ -1,16 +1,16 @@
 ### tyler gaunt's connections ###
-### v.1.2 ###
+### v.1.3 ###
 
-# import standard libraries
-# these are libraries built into python giving my script extra functionality
+## import standard libraries
+## these are libraries built into python giving my script extra functionality
 import time
 import random
 
-# import stuff from other .py files in this directory
-from Dictionaries import selected_categories
-from PrintGrid import print_letter_by_letter
+## import stuff from other .py files in this directory
+from CompleteCategories import selected_categories
+from TypewriterEffect import print_letter_by_letter
 
-# function area
+## function area
 def GenerateEmpty4x4Grid(): 
     width = 4
     height = 4
@@ -54,60 +54,35 @@ def RebuildGridUsingFlattenedRandomisedList(all_words_flat):
 
     return new_grid
 
-def RebuildAfterGuessCorrect(guessed_categories, original_categories):
-    row1 = []
-    row2 = []
-    row3 = []
-    row4 = []
-    # if one category has been guessed:
-        # first row populate with words in the new grid is the guessed category
-        # take out the guessed category from the original categories so there is only 3 left
-        # flatten remaining 12 words and then rebuild as the function above does but only go to 12
-    
-    # elif two categories have been guessed
-        # populate row 1 and 2 with the two two guessed category words
-        # make sure that both categories are removed from the original categories
-        # flatten remaining 8 words and rebuild up to 8 as above
-
-    # elif three 
-
-    # else:
-    # just display the original categories in a grid
-    pass
 
 def PrintFormatedPrettyGrid(grid):
-    # print("___________________________________________")
     max_length = max(len(word) for row in grid for word in row)
     for row in grid:
         for word in row:
             print(f'{word:{max_length}}', end='  ')
         print()
-    # print("‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾")
 
 def WelcomeScreen():
     print_letter_by_letter("Welcome to Connections v1.0\n")
-    print_letter_by_letter("A game by NYT painstakingly reverse engineered by Tyler Gaunt\n\n")
+    print_letter_by_letter("A game by NYT painstakingly reverse engineered by Tyler Gaunt\n")
+    print_letter_by_letter("Make sure to spell all words correct and use ONLY capital letters otherwise you will get it wrong\n")
+    print_letter_by_letter("You will be given 4 lives so try your best\n")
+    print_letter_by_letter("You can always start again at the end by typing Y when asked\n")
+    print_letter_by_letter("But now good luck and have fun\n\n")
 
 def GetPlayerGuess():
     guess = []
     for i in range(4):
-        word = input("Type your word")
+        word = input("Type your word   ")
         guess.append(word)
     return guess
 
 def ConvertListsToSetsAndCheckGuesses(connections,guess):
-    # if set(guess) == set(connections[0]["words"]) or set(guess) == set(connections[1]["words"]) or set(guess) == set(connections[2]["words"]) or set(guess) == set(connections[3]["words"]):
-    #     return True
-    # else:
-    #     return False
     for category in connections:
         if set(guess) == set(category["words"]):
             return category
-            break
-    
+            break  
     return False
-    
-# def ReDrawTheGridAfterCorrectGuess(connections, guess):    
 
 def PlayGame():
     WelcomeScreen()
@@ -117,28 +92,35 @@ def PlayGame():
     grid = RebuildGridUsingFlattenedRandomisedList(all_words_flat)
     PrintFormatedPrettyGrid(grid)
 
-    # main game loop
+    ## main game loop
     guessed_categories = []
     lives = 4
     won = False
-    while lives > 0 and won is False:
+    correct_guesses = 0  
+    while lives > 0 and not won: 
         guess = GetPlayerGuess()
         check_guess = ConvertListsToSetsAndCheckGuesses(connections, guess)
         if check_guess is False:
-            lives = lives - 1
-            print_letter_by_letter(f"Incorrect Guess, you have {lives} remaining.. ")
+            lives -= 1
+            print_letter_by_letter(f"Incorrect Guess, you have {lives} lives remaining.. \n")
         else:
-            guessed_categories.append(check_guess)
-            print_letter_by_letter(f"Correct Guess! ")
-
-            print(f"You guessed the following category: {check_guess["Category_name"]}")
-            
+            if check_guess not in guessed_categories:
+                guessed_categories.append(check_guess)
+                correct_guesses += 1  # Increment correct guesses counter
+                print_letter_by_letter(f"Correct Guess! ")
+                print(f"You guessed the following category: {check_guess['Category_name']}")
+            else:
+                print_letter_by_letter("You've already guessed this category. Try another one.\n")   
+            if correct_guesses == 4:  
+                won = True
     if lives == 0:
         print_letter_by_letter("Game Over")
+    else:
+        print_letter_by_letter("Congratulations! You've guessed all 4 categories correctly!\n")
 
 play_again = True
 while play_again == True:
     PlayGame()
     play_again = input("Play again? Y/N")
-    if play_again != "Y":
-        play_again = False
+    if play_again == "Y":
+        PlayGame()
