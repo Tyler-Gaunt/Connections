@@ -7,7 +7,7 @@ import time
 import random
 
 ## import stuff from other .py files in this directory
-from CompleteCategories import selected_categories
+from CompleteCategories import return_categories
 from TypewriterEffect import print_letter_by_letter
 
 ## function area
@@ -32,7 +32,6 @@ def FlattenThenShuffleCategoryDictionariesIntoList(connections):
     return all_words_flat
 
 def RebuildGridUsingFlattenedRandomisedList(all_words_flat):
-    index_of_word_in_flattened_list = 0
     new_grid = [[],[],[],[]]
 
     word_index = 0
@@ -54,13 +53,12 @@ def RebuildGridUsingFlattenedRandomisedList(all_words_flat):
 
     return new_grid
 
-
 def PrintFormatedPrettyGrid(grid):
     max_length = max(len(word) for row in grid for word in row)
     for row in grid:
         for word in row:
             print(f'{word:{max_length}}', end='  ')
-        print()
+        print("")
 
 def WelcomeScreen():
     print_letter_by_letter("Welcome to Connections v1.0\n")
@@ -86,7 +84,7 @@ def ConvertListsToSetsAndCheckGuesses(connections,guess):
 
 def PlayGame():
     WelcomeScreen()
-    connections = selected_categories
+    connections = return_categories()
     grid = GenerateEmpty4x4Grid()
     all_words_flat = FlattenThenShuffleCategoryDictionariesIntoList(connections)
     grid = RebuildGridUsingFlattenedRandomisedList(all_words_flat)
@@ -102,7 +100,7 @@ def PlayGame():
         check_guess = ConvertListsToSetsAndCheckGuesses(connections, guess)
         if check_guess is False:
             lives -= 1
-            print_letter_by_letter(f"Incorrect Guess, you have {lives} lives remaining.. \n")
+            print_letter_by_letter(f"Incorrect Guess, you have {lives} lives remaining... \n")
         else:
             if check_guess not in guessed_categories:
                 guessed_categories.append(check_guess)
@@ -114,13 +112,14 @@ def PlayGame():
             if correct_guesses == 4:  
                 won = True
     if lives == 0:
-        print_letter_by_letter("Game Over")
+        print_letter_by_letter("Game Over\n")
     else:
-        print_letter_by_letter("Congratulations! You've guessed all 4 categories correctly!\n")
+        print_letter_by_letter("Congratulations! You've guessed all 4 categories correctly!\n\n")
 
 play_again = True
 while play_again == True:
     PlayGame()
-    play_again = input("Play again? Y/N")
+    play_again = input("Play again? Y/N   ")
     if play_again == "Y":
         PlayGame()
+        
