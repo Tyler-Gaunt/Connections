@@ -10,7 +10,6 @@ import random
 from CompleteCategories import return_categories
 from TypewriterEffect import print_letter_by_letter
 
-## function area
 def GenerateEmpty4x4Grid(): 
     width = 4
     height = 4
@@ -116,6 +115,7 @@ def PlayGame():
     else:
         print_letter_by_letter("Congratulations! You've guessed all 4 categories correctly!\n\n")
 
+## Play Again prompt
 play_again = True
 while play_again == True:
     PlayGame()

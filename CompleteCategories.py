@@ -1,7 +1,8 @@
-### tyler gaunt's connections - dictionaries ###
+### tyler gaunt's connections - Categories ###
 ### for use in the MainCode.py ###
 ### to add more, simply add more dictionaries below and add them to categories list ###
 
+#currently 21 categories
 import random
 
 def return_categories():
@@ -85,6 +86,10 @@ def return_categories():
         "Category_name": "HUMAN BONES",
         "words": ["FEMUR", "RADIUS", "SKULL", "TIBIA"]
     }
-    categories = [cars, IIID_Shapes, complain, wings, Tom, animal_noses, common_colours, uncommon_colours, animal_groups, island_countries, celestial_objects, keyboard_keys, movie_summary, greek_mythology, astronomical_phenomena, religions, chemical_compounds, rivers, us_states, human_bones]
+    gemstones  = {
+        "Category_name": "GEMSTONES",
+        "words": ["DIAMOND", "RUBY", "EMERALD", "SAPPHIRE"]   
+        }
+    categories = [cars, IIID_Shapes, complain, wings, Tom, animal_noses, common_colours, uncommon_colours, animal_groups, island_countries, celestial_objects, keyboard_keys, movie_summary, greek_mythology, astronomical_phenomena, religions, chemical_compounds, rivers, us_states, human_bones, gemstones]
     selected_categories = random.sample(categories, 4) # pick four random categories
     return selected_categories

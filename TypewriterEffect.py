@@ -1,4 +1,4 @@
-### tyler gaunt's connections - dictionaries ###
+### Tyler Gaunt's connections - Typewriter Effect ###
 ### for use in the MainCode.py ###
 ### cool typewriter effect. just change delay on release.. ###
 
